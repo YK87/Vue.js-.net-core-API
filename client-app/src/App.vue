@@ -19,7 +19,6 @@
   src: local("Roboto"),
     url(./fonts/Roboto-Regular.ttf) format("truetype");
 }
-
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif, Roboto; */
   font-family: "Roboto";
@@ -28,23 +27,19 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   display: flex;
   background-color: #1B7656;
   padding-left: 10px;
   align-items: center;
 }
-
 #nav a {
   font-size: x-large;
   color: white;
   text-decoration: none;
   padding: 5px;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 </style>
