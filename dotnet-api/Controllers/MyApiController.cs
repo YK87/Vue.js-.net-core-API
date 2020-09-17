@@ -1,5 +1,6 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
@@ -25,64 +26,53 @@ namespace dotnet_api.Controllers
 
             return new OracleConnection(connectionString);
         }
-        
-        public string DataTableToJSON(DataTable table)   
-        {  
-            var JSONString = new StringBuilder();  
-            if (table.Rows.Count > 0)   
-            {  
-                JSONString.Append("[");  
-                for (int i = 0; i < table.Rows.Count; i++)   
-                {  
-                    JSONString.Append("{");  
-                    for (int j = 0; j < table.Columns.Count; j++)   
-                    {  
-                        if (j < table.Columns.Count - 1)   
-                        {  
-                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\",");  
-                        }   
-                        else if (j == table.Columns.Count - 1)   
-                        {  
-                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\"");  
-                        }  
-                    }  
-                    if (i == table.Rows.Count - 1)   
-                    {  
-                        JSONString.Append("}");  
-                    }   
-                    else   
-                    {  
-                        JSONString.Append("},");  
-                    }  
-                }  
-                JSONString.Append("]");  
-            }  
-            return JSONString.ToString();  
-        }
 
         [HttpGet]
-         public string TestRow(string Reg, string Per)
+         public JsonResult TestRow(decimal Reg, DateTime Per)
         {
-            string queryString =
-                "select id, code_mo, summav, sank_mek "
-                + "from newuis.r_med_schet "
-                + "where 1=1 "
-                + $"and regionid = {Reg} "
-                + "and year = 2020 "
-                + $"and month = {Per.Substring(4, 1)} "
-                + "and active = -1 "
-                + "and companyid = 1 ";
-            OracleConnection con = GetConnection();
-            OracleCommand cmd = new OracleCommand();
-            cmd.CommandText = queryString;
-            cmd.Connection = con;
-            con.Open();
-            cmd.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            da.Fill(dt);
-            con.Close();
-            return DataTableToJSON(dt);
+            using (OracleConnection con = GetConnection())
+            {
+                using (OracleCommand cmd = con.CreateCommand())
+                {
+                    List<TestData> tests = new List<TestData>();
+
+                    con.Open();
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "expmsk.pkg_reports.get_schets";
+                    cmd.BindByName = true;
+                    cmd.Parameters.Add("p_regionid", OracleDbType.Decimal).Value = Reg;
+                    cmd.Parameters.Add("p_date", OracleDbType.Date).Value = Per;
+                    cmd.Parameters.Add("p_companyid", OracleDbType.Decimal).Value = 1;
+                    cmd.Parameters.Add("rc", OracleDbType.RefCursor).Direction = ParameterDirection.ReturnValue;
+
+                    OracleDataReader reader = cmd.ExecuteReader();
+                    if (reader != null)
+                    {                        
+                        while (reader.Read())
+                        {
+                            var test = new TestData()
+                            {
+                                Id = reader.GetInt32("ID"),
+                                Year = reader.GetInt32("YEAR"),
+                                Month = reader.GetInt32("MONTH"),
+                                RegionId = reader.GetInt32("REGIONID"),
+                                RegionName = reader.GetString("REGION_NAME"),
+                                CompanyId = reader.GetInt32("COMPANYID"),
+                                CompanyName = reader.GetString("COMPANY_NAME"),
+                                CodeMo = reader.GetString("CODE_MO"),
+                                MoName = reader.GetString("LPU_NAME"),
+                                AccountSum = reader.GetDecimal("SUMMAV"),
+                                AccountDecuction = reader.GetDecimal("SANK_MEK")
+                            };
+
+                            tests.Add(test);
+                        }
+                        reader.Dispose();
+                    }
+                    return Json(tests);
+                }
+            }
         }
     }     
 }

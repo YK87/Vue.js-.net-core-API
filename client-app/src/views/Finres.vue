@@ -8,7 +8,8 @@
             <v-card-text>
                 <v-form>
                     <v-text-field
-                        label="Регион" 
+                        label="Регион"
+                        type="number" 
                         hint="77, 57, 69 ..."
                         counter="2"
                         :rules = "rules"
@@ -17,8 +18,7 @@
                     />
                     <v-text-field
                         label = "Период"
-                        hint = "дата в формате дд/мм/гггг"
-                        counter = "10"
+                        type="datetime-local"
                         prepend-icon="mdi-alarm-check"
                         v-model="selectedPeriod"
                     />
@@ -37,15 +37,7 @@
 
         <v-card>
             <v-card-title>
-                <h1 class="display-1">Счета</h1>
-                <v-spacer></v-spacer>
-                <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                ></v-text-field>
+                <h1 class="display-1">Счета</h1>                
             </v-card-title>
             <v-data-table
                 :headers = "headers"
@@ -81,10 +73,17 @@ export default {
             selectedPeriod: '',
             rules: [v => v.length <= 2 || 'Не более 2-х символов'],
             headers: [
-                { text: 'Id', align: 'start', value: 'ID' },
-                { text: 'CodeMo', value: 'CODE_MO' },
-                { text: 'AccountSum', value: 'SUMV' },
-                { text: 'AccountDeduction', value: 'SANK_MEK' }
+                { text: 'Айди счета', align: 'start', value: 'id' },
+                { text: 'Год', value: 'year' },
+                { text: 'Месяц', value: 'month' },
+                { text: 'Айди региона', value: 'regionId' },
+                { text: 'Регион', value: 'regionName' },
+                { text: 'Айди компании', value: 'companyId' },
+                { text: 'Компания', value: 'companyName' },
+                { text: 'Код МО', value: 'codeMo' },
+                { text: 'Наименование МО', value: 'moName' },
+                { text: 'Сумма счета', value: 'accountSum' },
+                { text: 'Удержанная сумма', value: 'accountDeduction' }
             ]
         }        
     }
