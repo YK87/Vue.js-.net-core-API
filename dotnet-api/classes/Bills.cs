@@ -1,4 +1,4 @@
-public class TestData
+public class Bills
 {
     public int Id {get; set; }
     public int Year {get; set; }
@@ -10,5 +10,5 @@ public class TestData
     public string CodeMo {get; set; }
     public string MoName {get; set; }
     public decimal AccountSum {get; set; }
-    public decimal AccountDecuction {get; set; }
+    public decimal AccountDeduction {get; set; }
 }

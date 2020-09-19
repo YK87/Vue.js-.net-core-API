@@ -40,11 +40,11 @@
           <v-btn
             color=#1B7656
             dark
-            @click=router-link to="/exchange"
+            @click=router-link to="/tasklist"
             class="mx-auto mt-5"
             block
           >
-            Журнал обмена
+            Список задач
           </v-btn>
           <v-btn
             color=#1B7656
@@ -93,19 +93,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  display: flex;
-  background-color: #1B7656;
-  padding-left: 10px;
-  align-items: center;
-}
-#nav a {
-  font-size: x-large;
-  color: white;
-  text-decoration: none;
-  padding: 5px;
-}
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+
 </style>

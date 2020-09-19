@@ -58,7 +58,7 @@ export default {
         async getFinres(reg, per) {
             await axios({
                 method: 'get',
-                url: 'http://localhost:3000/MyApi', params: {
+                url: 'http://localhost:3000/MyApi/GetBills', params: {
                     Reg: reg,
                     Per: per
                 }

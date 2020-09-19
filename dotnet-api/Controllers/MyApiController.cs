@@ -7,7 +7,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace dotnet_api.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     
     public class MyApiController : Controller 
@@ -28,13 +28,13 @@ namespace dotnet_api.Controllers
         }
 
         [HttpGet]
-         public JsonResult TestRow(decimal Reg, DateTime Per)
+         public JsonResult GetBills(decimal Reg, DateTime Per)
         {
             using (OracleConnection con = GetConnection())
             {
                 using (OracleCommand cmd = con.CreateCommand())
                 {
-                    List<TestData> tests = new List<TestData>();
+                    List<Bills> bills = new List<Bills>();
 
                     con.Open();
 
@@ -51,7 +51,7 @@ namespace dotnet_api.Controllers
                     {                        
                         while (reader.Read())
                         {
-                            var test = new TestData()
+                            var bill = new Bills()
                             {
                                 Id = reader.GetInt32("ID"),
                                 Year = reader.GetInt32("YEAR"),
@@ -63,16 +63,41 @@ namespace dotnet_api.Controllers
                                 CodeMo = reader.GetString("CODE_MO"),
                                 MoName = reader.GetString("LPU_NAME"),
                                 AccountSum = reader.GetDecimal("SUMMAV"),
-                                AccountDecuction = reader.GetDecimal("SANK_MEK")
+                                AccountDeduction = reader.GetDecimal("SANK_MEK")
                             };
 
-                            tests.Add(test);
+                            bills.Add(bill);
                         }
                         reader.Dispose();
                     }
-                    return Json(tests);
+                    return Json(bills);
                 }
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetTaskLists() {
+            return Json("Get All");
+        }
+
+        [HttpGet]
+        public JsonResult GetTaskList(Int32 Id) {
+            return Json("Get one");
+        }
+
+        [HttpPost]
+        public JsonResult CreateTask(TaskLists task) {
+            return Json("Created new task");
+        }
+
+        [HttpPut]
+        public JsonResult UpdateTask(Int32 Id) {
+            return Json("Updated");
+        }
+
+        [HttpDelete]
+        public JsonResult DeleteTask(Int32 Id) {
+            return Json("Deleted");
         }
     }     
 }

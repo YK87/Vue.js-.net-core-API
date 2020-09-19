@@ -5,6 +5,7 @@ import About from '../views/About.vue'
 import Features from '../views/Features.vue'
 import Finres from '../views/Finres.vue'
 import Exchange from '../views/Exchange.vue'
+import TaskList from '../views/TaskList.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/exchange',
     name: 'exchange',
     component: Exchange
+  },
+  {
+    path: '/tasklist',
+    name: 'tasklist',
+    component: TaskList
   }
 ]
 

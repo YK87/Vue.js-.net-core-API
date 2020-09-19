@@ -31,10 +31,10 @@
               <v-btn
                 color=#1B7656
                 dark
-                @click=router-link to="/exchange"
+                @click=router-link to="/tasklist"
                 class="mx-auto"
               >
-                Журнал обмена
+                Список задач
               </v-btn>
             </v-card-actions>
           </v-card>
