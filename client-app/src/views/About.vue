@@ -14,13 +14,9 @@ export default {
 
 <style scoped>
   #about {
-    display: flex;
-    padding: 20px;    
+    padding: 1rem;    
   }
   #about h1 {
-    display: flex;
-    padding: 20px;
-    align-self: center;
     color: #1B7656;
   }
 

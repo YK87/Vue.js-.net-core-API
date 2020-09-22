@@ -1,7 +1,11 @@
 <template>
     <v-app>
     <div id="finres">
-        <v-card width="400" class="mx-auto mt-5">
+        <v-card 
+            width="400" 
+            class="mx-auto mt-5"
+            elevation="0"    
+        >
             <v-card-title>
                 <h1 class="display-1">Просмотр счетов</h1>
             </v-card-title>
