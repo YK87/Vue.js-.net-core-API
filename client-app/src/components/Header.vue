@@ -28,7 +28,7 @@
           <v-btn
             color=#1B7656
             dark
-            @click=router-link to="/finres"
+            @click=router-link to="/bills"
             class="mx-auto mt-5"
             block
           >
@@ -46,7 +46,16 @@
           <v-btn
             color=#1B7656
             dark
-            @click=router-link to="/"
+            @click=router-link to="/finres"
+            class="mx-auto mt-5"
+            block
+          >
+            Финансовый результат
+          </v-btn>
+          <v-btn
+            color=#1B7656
+            dark
+            @click=router-link to="/expertise"
             class="mx-auto mt-5"
             block
           >

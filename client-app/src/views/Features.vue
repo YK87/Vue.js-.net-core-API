@@ -10,13 +10,21 @@
             justify="center"
           >
             <div id="pad">
-              <FeatureCard title="Просмотр счетов" imgName="finres.jpg" linkTo="finres" />
+              <FeatureCard title="Просмотр счетов" imgName="bills.jpg" linkTo="bills" />
             </div>
             <div id="pad">
-              <FeatureCard title="Список задач" imgName="schets.jpg" linkTo="tasklist" />
+              <FeatureCard title="Список задач" imgName="tasks.jpg" linkTo="tasklist" />
             </div>
             <div id="pad">
-              <FeatureCard title="Эспертиза" imgName="expertise.jpg" linkTo="" />
+              <FeatureCard title="Финансовый результат" imgName="fin.jpg" linkTo="/finres" />
+            </div>
+          </v-row>
+          <v-row
+            align="center"
+            justify="center"
+          >
+            <div id="pad">
+              <FeatureCard title="Экспертиза" imgName="expertise.jpg" linkTo="/expertise" />
             </div>
           </v-row>
         </v-container>
